@@ -1,0 +1,9 @@
+client id :- 494305963069-lnqfju4nqjjr80vfj4ln711fmgsh66mo.apps.googleusercontent.com
+client sec :- tMvUgzt6pysLghO_svrirSLO
+
+dev :- KYNBQn_qthcTRVpuHmcdAA
+
+
+acc tok : ya29.A0AfH6SMBK2GJZJPJUlUztHKXn239eFjfncRVttoDGN3tRi5Y616yDfmVovXDnQ0l3EY5rBDw6n3-972jJHpCLf1i1GvvDOcb_MsPpBznyw4ydk_u4dFJwfmI1G8CTfM1FZNNf3TZETvQ4-bPpVZjBZYhzVDzDpT9i5aCR0vSB66w
+
+ref tok : 1//04P-vOpU_JTAiCgYIARAAGAQSNwF-L9IrEYEZh7fZV5sEruhkte8S524_Uhpg4PWH1CGwQR1GinUkwQhBUqtphb-yvEAUDKgqo8I

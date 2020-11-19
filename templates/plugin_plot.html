@@ -1,0 +1,376 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<!------ Include the above in your HEAD tag ---------->
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Plugin Data</title>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.cyan-light_blue.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'main.css') }}">
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+
+  </head>
+  <body>
+    <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+      <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+        <div class="mdl-layout__header-row">
+          {%if not com%}
+          <span class="mdl-layout-title">{{data['name'][tid]}}</span>
+          {% else %}
+          <span class="mdl-layout-title">Compare</span>
+          {% endif %}
+          <div class="mdl-layout-spacer"></div>
+    
+      </header>
+      <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+
+        <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
+      
+        {% for v in data['name'].index %}
+          <a class="mdl-navigation__link" href="{{url_for('home')}}{{data['name'][v]}}/{{v}}">{{data['name'][v]}}</a>
+        {% endfor %}
+          <a class="mdl-navigation__link" href="{{url_for('home')}}compare/11">Compare</a>
+          <div class="mdl-layout-spacer"></div>
+          
+        </nav>
+      </div>
+      {% if not com %}
+      <main class="mdl-layout__content mdl-color--grey-100">
+        <div class="mdl-grid demo-content" >
+          <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid" >
+              <div align="center" style="margin-left: 150px;">
+              <h4 >Downloads :- </h4> 
+              
+              <h2 class="font-weight-bold text-center">{{data['downloads'][tid]}}</h2>
+              </div>
+          </div>
+          <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid">
+            <div align="center" style="margin-left: 150px;">
+              <h4 >Rating Count :- </h4> 
+              <h2 class="font-weight-bold text-center">{{data['rating_count'][tid]}}</h2>
+            </div>
+          </div>
+
+          
+
+
+
+        </div>
+        <div class="mdl-grid demo-content" >
+          <div  class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid" >
+              <div id='num_pl' style="margin-left: 50px;"></div>
+          </div>
+          <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid" >
+              <div id='rating' style="margin-left: 50px;"></div>
+          </div>
+
+          <div  class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid" >
+              <div id='free_plug' style="margin-left: 50px;"></div>
+          </div>
+          <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-grid" >
+              <div id='prem_plug' style="margin-left: 50px;"></div>
+          </div>
+          
+          
+
+
+        </div>
+
+
+        <div class="mdl-grid demo-content" >
+          <div  class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" >
+            {% for k,v in data['plugin_data'][tid]["title"].items() %}
+              
+              <div class="col-md-3" style="float:left">
+               <div class="card mb-2">
+                  <div class="card-top mdl-color--blue-grey-900 mdl-color-text--blue-grey-50" style="text-align: center;" >{{v}}</div>
+                  <div class="card-body" style="padding: 0;">
+                    
+                    <p class="card-text" style="text-align: center; background-color: #d9d9d9" >Downloads :- {{data['plugin_data'][tid]['install_count'][k]}}</p>
+                    <p class="card-text" style="text-align: center;">option :- {{data['plugin_data'][tid]['option'][k]}}</p>
+                    <p class="card-text" style="text-align: center; background-color: #d9d9d9" >Rating :- {{data['plugin_data'][tid]['rating'][k]}}</p>
+                    
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+
+          
+          
+        </div>
+
+        <div class="mdl-grid demo-content" >
+          <div  class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" >
+              <div id='rt_down'></div>
+          </div>
+
+          
+          
+        </div>
+        <!-- 
+        <div class="mdl-grid demo-content" >
+          <div  class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" >
+              <div id='key_down'></div>
+          </div>
+          
+          
+          
+        </div> -->
+        <div class="mdl-grid demo-content" >
+          <div  class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" >
+              <div id='pl_down'></div>
+          </div>
+          
+        </div>
+        <div class="mdl-grid demo-content" >
+          <div  class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" >
+              <div id='mean_fig'></div>
+          </div>
+          
+        </div>
+        <div class="mdl-grid demo-content" >
+          <div  class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" >
+              <div id='gr_fig'></div>
+          </div>
+          
+        </div>
+
+        <div class="mdl-grid demo-content" >
+          <div  class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" >
+              <div id='last_fig'></div>
+          </div>
+          
+        </div>
+
+        <div class="mdl-grid demo-content" >
+          <div  class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" >
+              <div id='ins_fig'></div>
+          </div>
+          
+        </div>
+
+        <div class="mdl-grid demo-content" >
+          <div  class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" >
+              <div id='avg_fig'></div>
+          </div>
+          
+        </div>
+
+        <div class="mdl-grid demo-content" >
+          <div  class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" >
+              <div id='tab_fig'></div>
+          </div>
+          
+        </div>
+        
+        <!-- <div class="mdl-grid demo-content" >
+          <div  class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" >
+              <div id='key_fig'></div>
+          </div>
+          
+        </div>
+
+        <div class="mdl-grid demo-content" >
+          <div  class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" >
+              <div id='ser_fig'></div>
+          </div>
+          
+        </div> -->
+      </main>
+    </div>
+      
+
+    
+    <script type="text/javascript">
+    var gr_data = [
+    {
+      
+      value: {{data['rating'][tid]}},
+      title: { text: "Rating" },
+      type: "indicator",
+      mode: "gauge+number",
+
+      gauge: { axis: { range: [null, 5] } }
+      }
+      ];
+
+  var layout = { width: 400, height: 200 ,margin: { t: 65, b: 45, l: 45, r: 45 }};
+  Plotly.newPlot('rating', gr_data, layout);
+
+  var gr_data2 = [
+  {
+    
+    value: {{(data['num_plugins'][tid] / 49120) * 100}},
+    title: { text: "% Number of plugins" },
+    type: "indicator",
+    mode: "gauge+number",
+
+    gauge: { axis: { range: [null, 100] } }
+  }
+];
+
+
+
+var layout2 = { width: 400, height: 200 ,margin: { t: 65, b: 45, l: 45, r: 45 }};
+Plotly.newPlot('num_pl', gr_data2, layout2);
+
+  var gr_data2 = [
+  {
+    
+    value: {{data['num_free'][tid]}},
+    title: { text: "free plugins" },
+    type: "indicator",
+    mode: "gauge+number",
+
+    gauge: { axis: { range: [null, {{data['num_plugins'][tid]}}] } }
+  }
+];
+
+
+
+var layout2 = { width: 400, height: 200 ,margin: { t: 65, b: 45, l: 45, r: 45 }};
+Plotly.newPlot('free_plug', gr_data2, layout2);
+
+  var gr_data2 = [
+  {
+    
+    value: {{data['num_premium'][tid] }},
+    title: { text: "premium + free plugins" },
+    type: "indicator",
+    mode: "gauge+number",
+
+    gauge: { axis: { range: [null, {{data['num_plugins'][tid]}}] } }
+  }
+];
+
+
+
+var layout2 = { width: 400, height: 200 ,margin: { t: 65, b: 45, l: 45, r: 45 }};
+Plotly.newPlot('prem_plug', gr_data2, layout2);
+
+function decodeJSON(encodedJSON) {
+  var decodedJSON = $('<div/>').html(encodedJSON).text();
+  return $.parseJSON(decodedJSON);
+ }
+var figure_plugin = decodeJSON('{{fig_plugin}}');
+
+var figure_download = decodeJSON('{{fig_down}}');
+//var figure_key_download = decodeJSON('{{fig_key_down}}');
+//var figure_key = decodeJSON('{{fig_key}}');
+var figure_gr = decodeJSON('{{fig_gr}}');
+var figure_mean = decodeJSON('{{fig_mean}}');
+var figure_last = decodeJSON('{{fig_last}}');
+var figure_ins = decodeJSON('{{fig_ins}}');
+var figure_tab = decodeJSON('{{fig_tab}}');
+var figure_avg = decodeJSON('{{fig_avg}}');
+//var figure_ser = decodeJSON('{{fig_ser}}');
+
+Plotly.newPlot('pl_down',figure_plugin.data,figure_plugin.layout);
+Plotly.newPlot('rt_down',figure_download.data,figure_download.layout);
+//Plotly.newPlot('key_down',figure_key_download.data,figure_key_download.layout);
+//Plotly.newPlot('key_fig',figure_key.data,figure_key.layout);
+Plotly.newPlot('gr_fig',figure_gr.data,figure_gr.layout);
+Plotly.newPlot('mean_fig',figure_mean.data,figure_mean.layout);
+Plotly.newPlot('last_fig',figure_last.data,figure_last.layout);
+Plotly.newPlot('ins_fig',figure_ins.data,figure_ins.layout);
+Plotly.newPlot('tab_fig',figure_tab.data,figure_tab.layout);
+Plotly.newPlot('avg_fig',figure_avg.data,figure_avg.layout);
+//Plotly.newPlot('ser_fig',figure_ser.data,figure_ser.layout);
+
+
+</script>
+
+{% else %}
+  <main class="mdl-layout__content mdl-color--grey-100">
+    <div class='mdl-grid demo-content'>
+      <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+          <div id='free_fig'></div>
+      </div>
+      
+    </div>
+    {% for fig in figs %}
+    <div class='mdl-grid demo-content'>
+      <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+          <div id="{{fig[1]}}"></div>
+
+      </div>
+      
+    </div>
+
+    {% endfor %}
+
+    <!-- <div class='mdl-grid demo-content'>
+      <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+          <div id='ser_fig'></div>
+      </div>
+      
+    </div> -->
+
+  </main>
+  <script type="text/javascript">
+    function decodeJSON(encodedJSON) {
+      var decodedJSON = $('<div/>').html(encodedJSON).text();
+      return $.parseJSON(decodedJSON);
+    }
+
+    var figure_free = decodeJSON('{{free_fig}}');
+
+    Plotly.newPlot('free_fig',figure_free.data,figure_free.layout);
+
+    
+    var figure_down = decodeJSON('{{figs[0][0]}}');
+
+    Plotly.newPlot('{{figs[0][1]}}',figure_down.data,figure_down.layout);
+
+    var figure_num = decodeJSON('{{figs[1][0]}}');
+
+    Plotly.newPlot('{{figs[1][1]}}',figure_num.data,figure_num.layout);
+
+    var figure_rat = decodeJSON('{{figs[2][0]}}');
+
+    Plotly.newPlot('{{figs[2][1]}}',figure_rat.data,figure_rat.layout);
+
+    var figure_con = decodeJSON('{{figs[3][0]}}');
+
+    Plotly.newPlot('{{figs[3][1]}}',figure_con.data,figure_con.layout);
+
+    var figure_avg = decodeJSON('{{figs[4][0]}}');
+
+    Plotly.newPlot('{{figs[3][1]}}',figure_avg.data,figure_avg.layout);
+    
+    //var figure_ser = decodeJSON('{{fig_ser}}');
+
+    //Plotly.newPlot('ser_fig',figure_ser.data,figure_ser.layout);
+    
+
+  </script>
+{% endif %}
+<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <script>
+  var button = document.createElement('button');
+  var textNode = document.createTextNode('Click Me!');
+  button.appendChild(textNode);
+  button.className = 'mdl-button mdl-js-button mdl-js-ripple-effect';
+  componentHandler.upgradeElement(button);
+  document.getElementById('container').appendChild(button);
+</script>
+
+  </body>
+</html>
